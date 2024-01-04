@@ -1,0 +1,53 @@
+{
+  "name": "nest-api",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "nest-api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/nest-api",
+        "main": "nest-api/src/main.ts",
+        "tsConfig": "nest-api/tsconfig.app.json",
+        "assets": ["nest-api/src/assets"],
+        "webpackConfig": "nest-api/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "nest-api:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "nest-api:build:development"
+        },
+        "production": {
+          "buildTarget": "nest-api:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "nest-api/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
